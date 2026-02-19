@@ -1,32 +1,72 @@
 package com.lynda.reglegestion.controler;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lynda.reglegestion.dto.TransactionRequest;
+import com.lynda.reglegestion.repository.TransactionRepository;
 import com.lynda.reglegestion.service.TransactionService;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
 
+    private final TransactionRepository transactionRepository;
 	private final TransactionService transactionService;
-	
-	//construction
-	public TransactionController(TransactionService transactionService) {
-		this.transactionService=transactionService;
+
+	// construction
+	public TransactionController(TransactionService transactionService, TransactionRepository transactionRepository) {
+		this.transactionService = transactionService;
+		this.transactionRepository = transactionRepository;
 	}
-	
-	@PostMapping("/{numerocompte}")
-	
-	public String TransactionEffectuer(@PathVariable String numerocompte) {
-		boolean autorise=transactionService.nombreTransactionParJour(numerocompte);
+
+	@PostMapping
+	public String transactionEffectuer(@RequestBody TransactionRequest request) {
+
+		//boolean autorise = transactionService.nombreTransactionParJour(request);
+
+		//String numeroCompte = request.getNumerocompte();
+
+		//if (!autorise) {
+		//	return "Nombre maximum de transactions atteint";
+		//}
 		
-		if (autorise) {
-            return "Transaction autorisée";
-        } else {
-            return "Nombre maximum de transactions atteint";
-        }
+		//Verifier l'espacement entre deux transaction
+		//boolean espacement = transactionService.espacementTransaction(request);
+		
+		//if(!espacement) {
+		//return "Votre transaction est encore tres recente";
+		//}
+
+		
+		//verification entre les heures de deux transactions
+				//boolean duree = transactionService.delaieTransactionParHeure(request);
+				
+				
+				//if(!duree) {
+					//return " Transaction recente";
+				//}
+				
+		//verification du soldes plafonner
+				//boolean soldePlafonner =transactionService.montantCumulerParJour(request);
+				//if(!soldePlafonner) {
+					//return "Vous avez atteint le plafond des montants fixé par jours";
+				//}
+				
+		//verifiacation et des comparaison des montants habituelles
+				boolean comparaison = transactionService.montantSupperieurMoyenneHabituelle(request);
+				if(comparaison) {
+					return"Alerte,Nous avons des doutes sur votre transaction";
+				}
+				
+				this.transactionService.enregistrerTransaction(request);
+		
+		return "Transaction effectuée";
+	
+		
 	}
+
+	
 }

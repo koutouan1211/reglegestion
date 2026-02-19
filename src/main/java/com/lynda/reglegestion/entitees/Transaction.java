@@ -15,7 +15,8 @@ public class Transaction {
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	private Integer id;
-	private LocalDateTime datetransaction;
+	private LocalDateTime dateheuretransaction;
+	private String datetransaction;
 	private Double montants;
 	private String numerocompte;
 	public Integer getId() {
@@ -24,12 +25,7 @@ public class Transaction {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public LocalDateTime getDatetransaction() {
-		return datetransaction;
-	}
-	public void setDatetransaction(LocalDateTime datetransaction) {
-		this.datetransaction = datetransaction;
-	}
+	
 	public Double getMontants() {
 		return montants;
 	}
@@ -42,10 +38,18 @@ public class Transaction {
 	public void setNumerocompte(String numerocompte) {
 		this.numerocompte = numerocompte;
 	}
-	
-	
-	
-	
-	
-	
+	public LocalDateTime getDateheuretransaction() {
+		return dateheuretransaction;
+	}
+	public void setDateheuretransaction(LocalDateTime dateheuretransaction) {
+		this.dateheuretransaction = dateheuretransaction;
+	}
+	public String getDatetransaction() {
+		return datetransaction;
+	}
+	public void setDatetransaction(String datetransaction) {
+		this.datetransaction = datetransaction;
+	}
+
+		
 }
