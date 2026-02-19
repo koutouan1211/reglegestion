@@ -61,6 +61,12 @@ public class TransactionController {
 					return"Alerte,Nous avons des doutes sur votre transaction";
 				}
 				
+	  //verification du montant maximal fixé
+				boolean montantMaximal=transactionService.montantMaximun(request);
+				if(!montantMaximal) {
+					return "Montant maximal atteint";
+				}
+				
 				this.transactionService.enregistrerTransaction(request);
 		
 		return "Transaction effectuée";

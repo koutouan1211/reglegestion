@@ -17,7 +17,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	List<Transaction> findByNumerocompteAndDatetransaction(String numerocompte, String datetransaction);
 
 	Optional<Transaction> findTopByNumerocompteOrderByDateheuretransactionDesc(String numerocompte);
+	
     List<Transaction> findByNumerocompte(String numerocompte);
+    
+   
 
 }
 

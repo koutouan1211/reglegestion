@@ -221,5 +221,33 @@ public class TransactionService {
 					//return true
 					return true;
 					
+}
+				
+				
+				public boolean montantMaximun(TransactionRequest request) {
+					//recuperer le compte
+					Optional<Transaction> maximun= transactionRepository.findTopByNumerocompteOrderByDateheuretransactionDesc(request.getNumerocompte());
+					if(maximun.isEmpty()) {
+						return true;
+					}
+					Transaction montantMaximun=maximun.get();
+					//comparaison entre le montant de la transaction et le montant maximun de la base de donnee
+					
+					//recuperer les infos du parametre regle
+					ParametreRegle regleMontantMax=regleRepository.findByNomRegle("MONTANT_MAXIMUN")
+							.orElseThrow(()-> new RuntimeException("cette règle n'existe pas"));
+					
+					//recuperer la valeur des deux montants montants de la transactions et le montants fixé
+					Double montantMax=Double.valueOf(regleMontantMax.getValeurRegle());
+					double montantTransaction= request.getMontants();
+					
+					//si le montant de la transaction est supperieur au montant maximun
+					if(montantTransaction>montantMax) {
+						//return false
+						return false;
+					}
+					
+					//return true
+					return true;
 				}
 }
