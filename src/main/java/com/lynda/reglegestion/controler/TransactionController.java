@@ -25,35 +25,35 @@ public class TransactionController {
 	@PostMapping
 	public String transactionEffectuer(@RequestBody TransactionRequest request) {
 
-		//boolean autorise = transactionService.nombreTransactionParJour(request);
+		boolean autorise = transactionService.nombreTransactionParJour(request);
 
-		//String numeroCompte = request.getNumerocompte();
+		String numeroCompte = request.getNumerocompte();
 
-		//if (!autorise) {
-		//	return "Nombre maximum de transactions atteint";
-		//}
+		if (!autorise) {
+			return "Nombre maximum de transactions atteint";
+		}
 		
 		//Verifier l'espacement entre deux transaction
-		//boolean espacement = transactionService.espacementTransaction(request);
+		boolean espacement = transactionService.espacementTransaction(request);
 		
-		//if(!espacement) {
-		//return "Votre transaction est encore tres recente";
-		//}
+		if(!espacement) {
+		return "Votre transaction est encore tres recente";
+		}
 
 		
 		//verification entre les heures de deux transactions
-				//boolean duree = transactionService.delaieTransactionParHeure(request);
+				boolean duree = transactionService.delaieTransactionParHeure(request);
 				
 				
-				//if(!duree) {
-					//return " Transaction recente";
-				//}
+				if(!duree) {
+					return " Transaction recente";
+				}
 				
 		//verification du soldes plafonner
-				//boolean soldePlafonner =transactionService.montantCumulerParJour(request);
-				//if(!soldePlafonner) {
-					//return "Vous avez atteint le plafond des montants fixé par jours";
-				//}
+				boolean soldePlafonner =transactionService.montantCumulerParJour(request);
+				if(!soldePlafonner) {
+					return "Vous avez atteint le plafond des montants fixé par jours";
+				}
 				
 		//verifiacation et des comparaison des montants habituelles
 				boolean comparaison = transactionService.montantSupperieurMoyenneHabituelle(request);

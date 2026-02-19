@@ -112,7 +112,7 @@ public class TransactionService {
 	
 	public boolean delaieTransactionParHeure(TransactionRequest request) {
 		
-		//recuperer les informations de la transaction(dateheuretransaction,numerocompte)
+		//recuperer les informations de la transaction(numerocompte)
 		
 		Optional<Transaction> optTransactions =transactionRepository.findTopByNumerocompteOrderByDateheuretransactionDesc(request.getNumerocompte());
 		//si c'est sa premiere fois de faire une transaction alors return(true)
@@ -143,7 +143,7 @@ public class TransactionService {
 		if(heure < regleValeur) {
 			return false;
 		}
-		//sinon return (false)
+		//sinon 
 				return true;
 	}
 				
@@ -157,7 +157,7 @@ public class TransactionService {
 	                DateTimeFormatter formatter= DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	                //recuperer le compte et la date du jour
 	                List<Transaction> transactionJournalier=transactionRepository.findByNumerocompteAndDatetransaction(numeroCompte, aujourdHui.format(formatter));
-					//on faire la somme des montants 
+					//initialisation de la somme total 
 					double sommeTotal=0;
 					//utilisation de la boucle for pour calculer la somme des montants
 					for(int i=0;i<transactionJournalier.size();i++) {
