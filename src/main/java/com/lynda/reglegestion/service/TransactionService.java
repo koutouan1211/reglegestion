@@ -250,4 +250,56 @@ public class TransactionService {
 					//return true
 					return true;
 				}
+					
+public boolean compteBloquerTemporairaiment(TransactionRequest request) {
+						
+						//recuperer le numero de compte
+						List<Transaction> listeTransaction=transactionRepository.findByNumerocompteOrderByDatetransactionDesc(request.getNumerocompte());
+						if(listeTransaction.isEmpty()) {
+							return true;
+						}
+						//declaration d'une variable pour recuperer la derniere transaction
+						
+						Transaction transaction=listeTransaction.get(0);
+						
+						//on va cree des variable dans Transaction l'un va stocker le nombre d'echec et l'autre va retourne un boolean
+						//on va recuperer la valeur du montant de la transaction
+						double montant=request.getMontants();
+						
+						//montant fixé
+						double montantFixe=500;
+						
+						//on va recuperer les infos du parametre regles
+						ParametreRegle parametreRegle=regleRepository.findByNomRegle("COMPTE_BLOQUER_TEMPORAIREMENT_APRES_ECHEC")
+								.orElseThrow(()-> new RuntimeException("Cette regle n'existe pas"));
+						
+						//convertion de type et on recupere la valeur de la base de donnée
+						Integer nombreMaxEchec=Integer.valueOf(parametreRegle.getValeurRegle());
+						
+						//on va comparer cette valeur a un montant fixé
+						//si le montant est inferrieur au montantfixé erreur ;on va refaire la saisir
+						
+						if(montant<montantFixe) {
+							
+							transaction.setNombreEchec(transaction.getNombreEchec() +1);
+							
+							if(transaction.getNombreEchec() == nombreMaxEchec) {
+								
+								transaction.setBloque(true);
+							}
+							
+							//enregistre les modification dans la base donnée
+							transactionRepository.save(transaction);
+							return transaction.isBloque();
+						}
+							//si l'operation est correcte on remet  le compteur a zero
+						transaction.setNombreEchec(0);
+						//sauvegarde dans la base de donnée
+						transactionRepository.save(transaction);
+						//return false
+						return false;
+		}
+		
+				
+				
 }

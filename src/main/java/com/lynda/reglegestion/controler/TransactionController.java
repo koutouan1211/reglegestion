@@ -66,6 +66,11 @@ public class TransactionController {
 				if(!montantMaximal) {
 					return "Montant maximal atteint";
 				}
+	//verification des echecs
+				boolean echecConsecutif = transactionService.compteBloquerTemporairaiment(request);	
+				if(!echecConsecutif) {
+					return "Echec de la transaction";
+				}
 				
 				this.transactionService.enregistrerTransaction(request);
 		

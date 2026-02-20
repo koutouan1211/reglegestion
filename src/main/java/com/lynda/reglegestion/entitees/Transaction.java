@@ -19,6 +19,24 @@ public class Transaction {
 	private String datetransaction;
 	private Double montants;
 	private String numerocompte;
+	// stocke le nombre d'echec
+	private int nombreEchec;
+	//return true or false
+	private boolean bloque;
+	
+	
+	public int getNombreEchec() {
+		return nombreEchec;
+	}
+	public void setNombreEchec(int nombreEchec) {
+		this.nombreEchec = nombreEchec;
+	}
+	public boolean isBloque() {
+		return bloque;
+	}
+	public void setBloque(boolean bloque) {
+		this.bloque = bloque;
+	}
 	public Integer getId() {
 		return id;
 	}
