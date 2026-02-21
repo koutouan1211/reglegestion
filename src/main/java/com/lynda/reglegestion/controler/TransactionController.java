@@ -45,9 +45,9 @@ public class TransactionController {
 				boolean duree = transactionService.delaieTransactionParHeure(request);
 				
 				
-				if(!duree) {
-					return " Transaction recente";
-				}
+			if(!duree) {
+				return " Transaction recente";
+			}
 				
 		//verification du soldes plafonner
 				boolean soldePlafonner =transactionService.montantCumulerParJour(request);
@@ -62,16 +62,16 @@ public class TransactionController {
 				}
 				
 	  //verification du montant maximal fixé
-				boolean montantMaximal=transactionService.montantMaximun(request);
+			boolean montantMaximal=transactionService.montantMaximun(request);
 				if(!montantMaximal) {
 					return "Montant maximal atteint";
 				}
 	//verification des echecs
-				boolean echecConsecutif = transactionService.compteBloquerTemporairaiment(request);	
-				if(!echecConsecutif) {
-					return "Echec de la transaction";
-				}
-				
+				//boolean echecConsecutif = transactionService.compteBloquerTemporairaiment(request);	
+				//if(echecConsecutif) {
+					//return "Echec de la transaction";
+			//}
+		
 				this.transactionService.enregistrerTransaction(request);
 		
 		return "Transaction effectuée";

@@ -256,12 +256,15 @@ public boolean compteBloquerTemporairaiment(TransactionRequest request) {
 						//recuperer le numero de compte
 						List<Transaction> listeTransaction=transactionRepository.findByNumerocompteOrderByDatetransactionDesc(request.getNumerocompte());
 						if(listeTransaction.isEmpty()) {
-							return true;
+							return false;
 						}
 						//declaration d'une variable pour recuperer la derniere transaction
 						
 						Transaction transaction=listeTransaction.get(0);
-						
+						//estil deja bloqué?
+						if(transaction.isBloque()) {
+							return true;
+						}
 						//on va cree des variable dans Transaction l'un va stocker le nombre d'echec et l'autre va retourne un boolean
 						//on va recuperer la valeur du montant de la transaction
 						double montant=request.getMontants();
@@ -274,30 +277,30 @@ public boolean compteBloquerTemporairaiment(TransactionRequest request) {
 								.orElseThrow(()-> new RuntimeException("Cette regle n'existe pas"));
 						
 						//convertion de type et on recupere la valeur de la base de donnée
-						Integer nombreMaxEchec=Integer.valueOf(parametreRegle.getValeurRegle());
+						int nombreMaxEchec=Integer.parseInt(parametreRegle.getValeurRegle());
 						
 						//on va comparer cette valeur a un montant fixé
 						//si le montant est inferrieur au montantfixé erreur ;on va refaire la saisir
 						
 						if(montant<montantFixe) {
+							int nouveauEchec=transaction.getNombreEchec()+1;
+							transaction.setNombreEchec(nouveauEchec);
 							
-							transaction.setNombreEchec(transaction.getNombreEchec() +1);
-							
-							if(transaction.getNombreEchec() == nombreMaxEchec) {
-								
+							if(nouveauEchec>=nombreMaxEchec) {
 								transaction.setBloque(true);
+						       
 							}
 							
-							//enregistre les modification dans la base donnée
 							transactionRepository.save(transaction);
 							return transaction.isBloque();
 						}
-							//si l'operation est correcte on remet  le compteur a zero
-						transaction.setNombreEchec(0);
-						//sauvegarde dans la base de donnée
-						transactionRepository.save(transaction);
-						//return false
-						return false;
+						else {
+							transaction.setNombreEchec(0);
+							transactionRepository.save(transaction);
+							return false;
+						}
+						
+						
 		}
 		
 				
