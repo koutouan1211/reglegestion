@@ -2,7 +2,7 @@ package com.lynda.reglegestion.controler;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lynda.reglegestion.dto.TransactionRequest;
@@ -10,7 +10,7 @@ import com.lynda.reglegestion.repository.TransactionRepository;
 import com.lynda.reglegestion.service.TransactionService;
 
 @RestController
-@RequestMapping("/transactions")
+
 public class TransactionController {
 
     private final TransactionRepository transactionRepository;

@@ -253,6 +253,7 @@ public class TransactionService {
 					
 public boolean compteBloquerTemporairaiment(TransactionRequest request) {
 						
+	                   
 						//recuperer le numero de compte
 						List<Transaction> listeTransaction=transactionRepository.findByNumerocompteOrderByDatetransactionDesc(request.getNumerocompte());
 						if(listeTransaction.isEmpty()) {
@@ -303,6 +304,5 @@ public boolean compteBloquerTemporairaiment(TransactionRequest request) {
 						
 		}
 		
-				
-				
+					
 }

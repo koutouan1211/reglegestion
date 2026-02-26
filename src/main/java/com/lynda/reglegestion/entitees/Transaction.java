@@ -23,7 +23,7 @@ public class Transaction {
 	private int nombreEchec;
 	//return true or false
 	private boolean bloque;
-	
+
 	
 	public int getNombreEchec() {
 		return nombreEchec;
