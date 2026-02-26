@@ -49,7 +49,7 @@ public class ParametreController {
 		return parametreService.transfertBancaire(dto);
 	}
 	
-	@PostMapping("/canal")
+	@PostMapping()
 	public String canal(@RequestBody ParametreTransaction dto ) {
 		return parametreService.canalUssd(dto);
 	}
