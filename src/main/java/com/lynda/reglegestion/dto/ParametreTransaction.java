@@ -5,6 +5,7 @@ public class ParametreTransaction {
 	private String typeTransaction ;
 	private String categorieSender;
 	private String categorieRecever;
+	private String paymentType;
 	
 	
 	public String getTypeTransaction() {
@@ -25,6 +26,12 @@ public class ParametreTransaction {
 	}
 	public void setCategorieRecever(String categorieRecever) {
 		this.categorieRecever = categorieRecever;
+	}
+	public String getPaymentType() {
+		return paymentType;
+	}
+	public void setPaymentType(String paymentType) {
+		this.paymentType = paymentType;
 	}
 	
 	

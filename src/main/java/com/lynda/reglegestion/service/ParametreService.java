@@ -1,5 +1,7 @@
 package com.lynda.reglegestion.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 
@@ -8,7 +10,47 @@ import com.lynda.reglegestion.dto.ParametreTransaction;
 @Service
 public class ParametreService {
 	
-	
+	public String channelRule(ParametreTransaction request) {
+		
+		if(request.getTypeTransaction().equals("paiement")) {
+			if(request.getCategorieSender().equals("P")) {
+				if(request.getCategorieRecever().equals("P")) {
+					if(request.getPaymentType().equals("QR")) {
+						return "731";
+					} 
+					else if(List.of("ALIAS", "OTHER_ACCOUNT", "IBAN").contains(request.getPaymentType())) {
+						return "633";
+					}
+					else if(request.getPaymentType().startsWith("USSD")) {
+						return "300";
+					}
+					else return "IMPOSSIBLE";
+				}
+				else {
+					if(request.getPaymentType().equals("QR")) {
+						return "000";
+					} 
+					else if(request.getPaymentType().equals("QRDYN")) {
+						return "400";
+					}
+					else if(List.of("ALIAS", "OTHER_ACCOUNT", "IBAN").contains(request.getPaymentType())) {
+						return "999";
+					}
+					else if(request.getPaymentType().startsWith("USSD")) {
+						return "300";
+					}
+					else return "IMPOSSIBLE";
+				}
+			} 
+			else if(request.getCategorieSender().equals("B")) {
+			else if()
+				return ""; 
+				
+			}
+		}
+		
+		return null;
+	}
 	
 	
 	public String transactionCodeQr(ParametreTransaction dto) {
