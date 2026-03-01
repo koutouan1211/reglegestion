@@ -12,7 +12,7 @@ public class ParametreService {
 	
 	public String channelRule(ParametreTransaction request) {
 		if(request==null||request.getCategorieRecever()==null||request.getCategorieRecever().isBlank()) {
-			return"donnée invalidé";
+			return"Champ Vide";
 		}
 		
 		if("paiement".equals(request.getTypeTransaction())) {
