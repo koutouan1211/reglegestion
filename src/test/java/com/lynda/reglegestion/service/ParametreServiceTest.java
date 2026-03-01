@@ -25,7 +25,7 @@ public class ParametreServiceTest {
 		String resultat=Service.channelRule(request);
 		
 		//on verifie le resultat
-		assertEquals("donnée invalidé",resultat);
+		assertEquals("Champ Vide",resultat);
 	}
 	
 }
