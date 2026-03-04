@@ -18,7 +18,6 @@ public class CanalController {
 		this.parametreService=parametreService;
 	}
 
-	
 	@PostMapping
 	public String getRequestChannel(@RequestBody ParametreTransaction request) {
 		return parametreService.channelRule(request);
